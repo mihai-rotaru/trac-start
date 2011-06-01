@@ -99,7 +99,7 @@ else:
 # finish composing the command
 runme = runme +\
         " " + "--port " + str(options.port_number) +\
-        " " + "--basic-auth='" + options.auth_string + "'" +\
+        " " + "--basic-auth=" + options.auth_string +\
         " " + envs
 
 print "command: " + runme

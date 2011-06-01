@@ -1,4 +1,4 @@
-- cannot authenticate
+X cannot authenticate
 - read config file
 - automatically start service after installing it
 - provide a 'refresh' option
