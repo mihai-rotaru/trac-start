@@ -1,0 +1,21 @@
+Two ways of starting multiple environments:
+- as a service
+- simply running tracd
+
+Why not simply use tracd ?
+--------------------------
+It is a matter of taste, mostly; I preffer using a script since I have many trac environments,
+and I need a flexible way of starting/restarting tracd - standard or as a service.
+
+Need a script to:
+- look in a specified file
+- each line of the file represents the path to a trac env
+- check if folder exists, and is trac env
+- add it to the list of env's to be passed as a parameter to tracd
+- construct the arguments to pass to nssm
+    ex: 
+    nssm install Tracs C:\Python26\Scripts\tracd-script.py "<generated env list>"
+- if the Tracs service is already running, restart it
+- manage lists with envs:
+    - active
+    - all
