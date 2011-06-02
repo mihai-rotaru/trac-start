@@ -64,9 +64,37 @@ parser.add_option( "--simulate",
                     default = False
                     )
 
+# check the config.cfg file
+config = ConfigParser.ConfigParser()
+config.read( "config.cfg" )
+
+# for each of the program's options, see if it is specified in the cfg file
+options = {}
+for opt in parser.option_list:
+    optname = ""
+
+    # get the long name of the option
+    i = str( opt ).find( '/' )
+    if i != -1:
+        optname = str( opt )[i+1:]
+    else:
+        optname = str( opt )
+    
+    # remove the two leading dashes
+    optname = optname[2:]
+
+    # look for this option in the config file
+    try:
+        print "cfg: " + optname + ": " + config.get( 'tracd', optname )
+        options[ optname ] = config.get( 'tracd', optname )
+    except ConfigParser.Error:
+        pass
+
+
+# parse command line arguments
 (options, args) = parser.parse_args()
 
-# check options
+# check command line arguments
 envs = ""
 if( options.env_list is not None ):
     if not os.path.isfile( options.env_list ):
