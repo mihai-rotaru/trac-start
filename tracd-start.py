@@ -16,8 +16,7 @@ def is_trac_env( folder ):
         else:
             return True
 
-
-# parse command line arguments
+# set supported command line arguments
 parser = OptionParser()
 
 parser.add_option(  "-e", "--env-list",   
@@ -41,8 +40,8 @@ parser.add_option(  "-a", "--auth-string",
 parser.add_option(  "-p", "--port-number",
                     dest    = "port_number",
                     type    = int,
-                    help    = "the port to run tracd on",
-                    default = 8000
+                    help    = "the port to run tracd on"
+#                    default = 8000
                     )
 
 parser.add_option( "-s", "--service-name",
@@ -58,8 +57,8 @@ parser.add_option( "--nssm-path",
                     )
 
 parser.add_option( "--simulate",
-                    action  = "store_true",
                     dest    = "simulate",
+                    action  = "store_true",
                     help    = "don't actually run tracd, just show the generated command",
                     default = False
                     )
@@ -69,7 +68,6 @@ config = ConfigParser.ConfigParser()
 config.read( "config.cfg" )
 
 # for each of the program's options, see if it is specified in the cfg file
-options = {}
 for opt in parser.option_list:
     optname = ""
 
@@ -81,15 +79,14 @@ for opt in parser.option_list:
         optname = str( opt )
     
     # remove the two leading dashes
-    optname = optname[2:]
+    optname_nodashes = optname[2:]
 
     # look for this option in the config file
     try:
-        print "cfg: " + optname + ": " + config.get( 'tracd', optname )
-        options[ optname ] = config.get( 'tracd', optname )
+        optname_ = optname_nodashes.replace('-','_')
+        parser.defaults[ optname_ ] = config.get( 'tracd', optname_nodashes )
     except ConfigParser.Error:
         pass
-
 
 # parse command line arguments
 (options, args) = parser.parse_args()
