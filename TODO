@@ -1,4 +1,7 @@
+- check to see if the desired service name isn't already taken
+- provide a 'refresh' option
+- check int/bool options
+- if no --env-list is supplied, check all folders in the current directory
 X cannot authenticate
 X read config file
 X automatically start service after installing it
-- provide a 'refresh' option
