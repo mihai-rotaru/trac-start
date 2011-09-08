@@ -57,9 +57,13 @@ for opt in parser.option_list:
 # check command line arguments
 envs = ""
 if( options.env_list is not None ):
-    if not os.path.isabs( options.env_list ):
+    # is the path to env_list absoulte or relative
+    if options.env_list.startswith ( '~' ):
+        options.env_list = os.path.expanduser ( options.env_list )
+    elif not os.path.isabs( options.env_list ):
         options.env_list = sys.path[0] + "/" + options.env_list
     
+    # does the env_list file exist ?
     if not os.path.isfile( options.env_list ):
         parser.error("Not a file: " + options.env_list)
     else:
