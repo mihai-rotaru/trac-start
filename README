@@ -1,21 +1,28 @@
-Two ways of starting multiple environments:
-- as a service
-- simply running tracd
+A script used to launch trac. Can install it as a service using `nssm`,
+or simply run `tracd`. Either way, it needs to be passed a text file with
+an absolute path to a trac environment on each line.
 
-Why not simply use tracd ?
---------------------------
-It is a matter of taste, mostly; I preffer using a script since I have many trac environments,
-and I need a flexible way of starting/restarting tracd - standard or as a service.
+-----------------------------------------------------------------------------
+Usage: tracd-start.py [options]
 
-Need a script to:
-- look in a specified file
-- each line of the file represents the path to a trac env
-- check if folder exists, and is trac env
-- add it to the list of env's to be passed as a parameter to tracd
-- construct the arguments to pass to nssm
-    ex: 
-    nssm install Tracs C:\Python26\Scripts\tracd-script.py "<generated env list>"
-- if the Tracs service is already running, restart it
-- manage lists with envs:
-    - active
-    - all
+Options:
+  -h, --help            show this help message and exit
+  -e ENV_LIST, --env-list=ENV_LIST
+                        a text file containing the absolute locations of trac
+                        environments ( one per line )
+  --python-path=PYTHON_PATH
+                        absolute path to your Python folder ( Ex: C:\Python26
+                        )
+  -a AUTH_STRING, --auth-string=AUTH_STRING
+                        a string to pass to --basic-aut option
+  -p PORT_NUMBER, --port-number=PORT_NUMBER
+                        the port to run tracd on
+  -s SERVICE_NAME, --service-name=SERVICE_NAME
+                        if supplied, run tracd as a service; string supplied
+                        is the name of the service. if this parameter is null,
+                        tracd will be started normally ( not as a service )
+  --nssm-path=NSSM_PATH
+                        absolute path to nssm executable
+  --simulate            don't actually run tracd, just show the generated
+                        command
+-----------------------------------------------------------------------------
