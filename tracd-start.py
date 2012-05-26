@@ -56,6 +56,7 @@ for opt in parser.option_list:
 
 # check command line arguments
 envs = ""
+no_envs = 0
 if( options.env_list is not None ):
     # is the path to env_list absoulte or relative
     if options.env_list.startswith ( '~' ):
@@ -76,8 +77,12 @@ if( options.env_list is not None ):
             elif not is_trac_env( line ):
                 print line + " is not a trac environment, skipping..."
             else:
+                no_envs = no_envs + 1
                 envs = envs + '"' + line + '" '
                 
+if no_envs == 0:
+    print "FATAL ERROR: \"" + options.env_list + "\" does not contain any valid Trac environments; exiting..."
+    sys.exit(1)
 
 # start building the command to be exectuted
 runme = ""
